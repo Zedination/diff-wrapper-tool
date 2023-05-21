@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="538.0" prefWidth="938.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zedination.diffwrappertool.controller.CommitController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="35.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" text="Danh sách commit tại nhánh: master" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <TableView fx:id="listCommitTable" prefHeight="504.0" prefWidth="938.0" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn id="shaColumn" fx:id="shaColumn" prefWidth="197.0" text="SHA" />
+          <TableColumn id="messageColumn" fx:id="messageColumn" prefWidth="385.0" text="Message" />
+            <TableColumn id="authorColumn" fx:id="authorColumn" prefWidth="210.0" text="Author" />
+            <TableColumn id="dateColumn" fx:id="dateColumn" prefWidth="145.0" text="Date" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>

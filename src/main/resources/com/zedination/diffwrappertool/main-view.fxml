@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import org.controlsfx.control.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zedination.diffwrappertool.controller.MainController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="21.0" prefWidth="319.0" text="TOOL EXPORT GIT DIFF SOURCE RESULT" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="58.0" prefWidth="600.0">
+         <children>
+            <VBox prefHeight="43.0" prefWidth="403.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="193.0" text="Local git repository cần diff source" />
+                  <TextField fx:id="localRepoTextField" prefHeight="26.0" prefWidth="309.0" />
+               </children>
+            </VBox>
+            <Button fx:id="selectRepoButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#selectLocalRepoButton" prefHeight="25.0" prefWidth="126.0" text="Chọn thư mục">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="10.0" layoutY="65.0" prefHeight="60.0" prefWidth="541.0">
+         <children>
+            <Label prefHeight="47.0" prefWidth="106.0" text="Sử dụng Beyond Compare" wrapText="true" />
+            <ToggleSwitch prefHeight="18.0" prefWidth="57.0" selected="true" />
+            <VBox prefHeight="60.0" prefWidth="283.0">
+               <children>
+                  <Label prefHeight="17.0" prefWidth="177.0" text="Beyond Compare Location">
+                     <padding>
+                        <Insets left="20.0" />
+                     </padding>
+                  </Label>
+                  <TextField prefHeight="25.0" prefWidth="280.0">
+                     <VBox.margin>
+                        <Insets left="20.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="82.0" text="Chọn file">
+               <HBox.margin>
+                  <Insets left="30.0" />
+               </HBox.margin>
+            </Button>
+         </children></HBox>
+      <GridPane alignment="CENTER" prefHeight="79.0" prefWidth="624.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="249.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="133.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="241.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" prefWidth="88.0" text="LEFT" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </Label>
+            <HBox prefHeight="11.0" prefWidth="249.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <children>
+                  <TextField fx:id="leftCommitTextField">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="showCommitsLeftButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindows" prefHeight="25.0" prefWidth="28.0" text="...">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin></Button>
+               </children>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <children>
+                  <TextField fx:id="rightCommitTextField">
+                     <HBox.margin>
+                        <Insets left="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="showCommitsRightButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindowsRight" prefHeight="25.0" prefWidth="32.0" text="...">
+                     <HBox.margin>
+                        <Insets left="10.0" right="30.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <Button fx:id="switchButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSwitchButton" prefHeight="25.0" prefWidth="144.0" text="Switch" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button mnemonicParsing="false" onAction="#startDiffByCommit" prefHeight="25.0" prefWidth="139.0" text="Bắt đầu Diff" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets top="30.0" />
+               </GridPane.margin>
+            </Button>
+            <Label prefHeight="17.0" prefWidth="64.0" text="RIGHT" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+         </children>
+      </GridPane>
+   </children>
+</VBox>
