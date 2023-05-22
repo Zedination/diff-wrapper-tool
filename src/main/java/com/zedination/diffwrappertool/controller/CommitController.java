@@ -2,11 +2,14 @@ package com.zedination.diffwrappertool.controller;
 
 import com.zedination.diffwrappertool.constant.EnumCommon;
 import com.zedination.diffwrappertool.model.Commit;
+import com.zedination.diffwrappertool.model.GlobalState;
 import com.zedination.diffwrappertool.service.GitService;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -27,6 +30,9 @@ public class CommitController {
     private TableView<Commit> listCommitTable;
 
     @FXML
+    private Label labelTitle;
+
+    @FXML
     private TableColumn<Commit, String> shaColumn;
 
     @FXML
@@ -37,6 +43,9 @@ public class CommitController {
 
     @FXML
     private TableColumn<Commit, String> dateColumn;
+
+    @FXML
+    private TextField searchInput;
 
     private Commit selectedItem;
 
@@ -54,17 +63,25 @@ public class CommitController {
 
     private ContextMenu contextMenu;
 
+    private final List<Commit> fullCommitList = new ArrayList<>();
+
+    private final List<Commit> commitList = new ArrayList<>();
+
     @FXML
     public void initialize() throws IOException {
+        labelTitle.setText(labelTitle.getText() + GlobalState.selectedBranch);
         this.shaColumn.setCellValueFactory(new PropertyValueFactory<>("sha"));
         this.messageColumn.setCellValueFactory(new PropertyValueFactory<>("message"));
         this.authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         this.dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         List<RevCommit> listCommit = GitService.getInstance().getListCommit();
-        List<Commit> commitList = new ArrayList<>();
-        listCommit.forEach(x -> commitList.add(new Commit(x.getId().getName(), x.getFullMessage(), x.getAuthorIdent().getName(), String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochSecond(x.getCommitTime()),
-                        TimeZone.getDefault().toZoneId())))));
+        listCommit.forEach(x -> {
+            this.commitList.add(new Commit(x.getId().getName(), x.getFullMessage(), x.getAuthorIdent().getName(), String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochSecond(x.getCommitTime()),
+                    TimeZone.getDefault().toZoneId()))));
+            this.fullCommitList.add(new Commit(x.getId().getName(), x.getFullMessage(), x.getAuthorIdent().getName(), String.valueOf(LocalDateTime.ofInstant(Instant.ofEpochSecond(x.getCommitTime()),
+                    TimeZone.getDefault().toZoneId()))));
+        });
         listCommitTable.setItems(FXCollections.observableList(commitList));
 
         listCommitTable.setOnMouseClicked(event -> {
@@ -86,12 +103,28 @@ public class CommitController {
         });
     }
 
+    @FXML
+    private void onKeypressSearchInput(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            List<Commit> temp = fullCommitList.stream().filter(this::findAll).toList();
+            listCommitTable.getItems().clear();
+            listCommitTable.getItems().addAll(temp);
+        }
+    }
+
+    private boolean findAll(Commit commit) {
+        String keyword = searchInput.getText().trim().toLowerCase();
+        return commit.getSha().toLowerCase().contains(keyword) || commit.getMessage().toLowerCase().contains(keyword)
+                || commit.getAuthor().toLowerCase().contains(keyword) || commit.getDate().toLowerCase().contains(keyword);
+    }
+
     private void createContextMenu() {
         if (Objects.nonNull(this.contextMenu)) {
             this.contextMenu.hide();
         }
         ContextMenu contextMenu = new ContextMenu();
         MenuItem menuItem1 = new MenuItem("Chọn commit này");
+        MenuItem menuItem2 = new MenuItem("Compare with local");
         menuItem1.setOnAction(e -> {
             if (EnumCommon.LEFT_COMMIT.equals(this.commitPosition)) {
                 mainController.getLeftCommitTextField().setText(selectedItem.getSha());
@@ -101,7 +134,18 @@ public class CommitController {
             Stage stage = (Stage) listCommitTable.getScene().getWindow();
             stage.close();
         });
-        contextMenu.getItems().addAll(menuItem1);
+        menuItem2.setOnAction(e -> {
+            try {
+                if (!GlobalState.isBeyondCompare) {
+                    GitService.getInstance().diffHtml(selectedItem.getSha(), "");
+                } else {
+                    GitService.getInstance().diffBeyondCompare(selectedItem.getSha(), "");
+                }
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        });
+        contextMenu.getItems().addAll(menuItem1, menuItem2);
         this.contextMenu = contextMenu;
     }
 }

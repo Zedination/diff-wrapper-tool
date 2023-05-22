@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a61fb2d1-6a55-4a93-81f9-6df74df044c4" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/listener/BranchChangeListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diff-wrapper-tool-1.0-SNAPSHOT-shaded.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/model/GlobalState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/model/GlobalState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/service/GitService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/service/GitService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/zedination/diffwrappertool/commit-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/zedination/diffwrappertool/commit-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/zedination/diffwrappertool/main-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/zedination/diffwrappertool/main-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +25,8 @@
       <list>
         <option value="FxmlFile" />
         <option value="Enum" />
-        <option value="Class" />
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -57,7 +65,7 @@
     "project.structure.last.edited": "Libraries",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.23678161",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -113,7 +121,9 @@
       <workItem from="1684655310691" duration="16488000" />
       <workItem from="1684677743574" duration="2493000" />
       <workItem from="1684680424566" duration="1257000" />
-      <workItem from="1684681691511" duration="11889000" />
+      <workItem from="1684681691511" duration="12319000" />
+      <workItem from="1684757024715" duration="1261000" />
+      <workItem from="1684770259197" duration="9743000" />
     </task>
     <servers />
   </component>
@@ -130,6 +140,25 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/listener/BranchChangeListener.java</url>
+          <line>10</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" line="111">
+        <watch expression="FXCollections.observableList(commitList.stream().filter(this::findAll).toList()" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" line="115">
+        <watch expression="searchInput.getText().trim().toLowerCase()" />
+      </inline-watch>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
@@ -8,11 +9,25 @@
    <children>
       <HBox alignment="CENTER" prefHeight="35.0" prefWidth="600.0">
          <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Danh sách commit tại nhánh: master" textAlignment="CENTER">
+            <Label fx:id="labelTitle" alignment="CENTER" contentDisplay="CENTER" text="Danh sách commit tại nhánh: " textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="96.0" text="Tìm kiếm">
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </Label>
+            <TextField fx:id="searchInput" onKeyPressed="#onKeypressSearchInput" prefHeight="25.0" prefWidth="826.0" HBox.hgrow="ALWAYS">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+            </TextField>
          </children>
       </HBox>
       <TableView fx:id="listCommitTable" prefHeight="504.0" prefWidth="938.0" VBox.vgrow="ALWAYS">

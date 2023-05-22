@@ -12,24 +12,31 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import jfxtras.styles.jmetro.JMetro;
 import jfxtras.styles.jmetro.JMetroStyleClass;
 import jfxtras.styles.jmetro.Style;
 import lombok.Getter;
+import org.controlsfx.control.ToggleSwitch;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
 public class MainController {
+
     @FXML
-    private Button switchButton;
+    private ToggleSwitch bcSwitch;
 
     @FXML
     @Getter
     private TextField leftCommitTextField;
+
+    @Getter
+    @FXML
+    private TextField beyondComparePathInput;
 
     @FXML
     @Getter
@@ -101,15 +108,54 @@ public class MainController {
     }
 
     @FXML
-    protected void startDiffByCommit() throws IOException {
-        String template = "diff2html -s side -f html -d word -i command -o preview -- -M %s %s";
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", String.format(template, leftCommitTextField.getText(), rightCommitTextField.getText()));
-        builder.directory(new File(GlobalState.selectedLocalRepository));
-        Process p = builder.start();
+    protected void selectBeyondComparePath(Event event) throws IOException {
+        Node node = (Node) event.getSource();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Chọn file Bcomp cần mở");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter(".exe file", "*.exe"));
+        File file = fileChooser.showOpenDialog(node.getScene().getWindow());
+        if (Objects.nonNull(file)) {
+            beyondComparePathInput.setText(file.getAbsolutePath());
+            GitService.getInstance().changeConfigForBeyondCompare(this.beyondComparePathInput.getText());
+        }
     }
 
     @FXML
-    public void initialize() throws IOException {
+    protected void handleTextChangedBeyondPath() throws IOException {
+        if (!this.beyondComparePathInput.getText().isEmpty()) {
+            GitService.getInstance().changeConfigForBeyondCompare(this.beyondComparePathInput.getText());
+        }
+    }
+
+    @FXML
+    protected void handleTextChangedGitPath() throws IOException {
+        if (!this.localRepoTextField.getText().isEmpty()) {
+            GlobalState.selectedLocalRepository = this.localRepoTextField.getText();
+            GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+        }
+    }
+
+    @FXML
+    protected void startDiffByCommit() throws IOException {
+        if (!GlobalState.isBeyondCompare) {
+            GitService.getInstance().diffHtml(leftCommitTextField.getText(), rightCommitTextField.getText());
+        } else {
+            GitService.getInstance().diffBeyondCompare(leftCommitTextField.getText(), rightCommitTextField.getText());
+        }
+    }
+
+    @FXML
+    protected void enableBeyondCompare() throws IOException {
+        if (this.bcSwitch.isSelected()) {
+            GitService.getInstance().changeConfigForBeyondCompare(this.beyondComparePathInput.getText());
+            GlobalState.isBeyondCompare = true;
+        } else {
+            GlobalState.isBeyondCompare = false;
+        }
+    }
+
+    @FXML
+    public void initialize() {
         System.out.println("Application start!");
     }
 }

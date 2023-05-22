@@ -8,4 +8,6 @@ public class GlobalState {
 
     public static String selectedLocalRepository;
 
+    public static boolean isBeyondCompare = false;
+
 }
