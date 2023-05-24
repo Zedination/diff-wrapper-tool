@@ -165,6 +165,7 @@ public class MainController {
         beyondComparePathInput.setText(ConfigService.getInstance().readConfig(Constant.BEYOND_COMPARE_PATH));
         String userPath = System.getProperty("user.home");
         Files.createDirectories(Paths.get(userPath + "/AppData/Local/Diff Wrapper"));
+        ConfigService.getInstance().copyBundleHtmlDiff();
         System.out.println("Application start!");
     }
 }

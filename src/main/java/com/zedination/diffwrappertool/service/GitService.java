@@ -72,8 +72,11 @@ public class GitService {
     }
 
     public void diffHtml(String leftCommit, String rightCommit) throws IOException {
-        String template = "diff2html -s side -t DIFF_RESULT -f html -d word -i command -o preview -- -M %s %s";
-        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", String.format(template, leftCommit, rightCommit));
+//        String template = "diff2html -s side -t DIFF_RESULT -f html -d word -i command -o preview -- -M %s %s";
+        String userPath = System.getProperty("user.home");
+        String destinationFolderPath = "\"" + userPath + "/AppData/Local/Diff Wrapper/node_modules/.bin/diff2html" + "\"";
+        String template = "%s -s side -t DIFF_RESULT -f html -d word -i command -o preview -- -M %s %s";
+        ProcessBuilder builder = new ProcessBuilder("cmd.exe", "/c", String.format(template, destinationFolderPath, leftCommit, rightCommit));
         builder.directory(new File(GlobalState.selectedLocalRepository));
         builder.start();
     }
