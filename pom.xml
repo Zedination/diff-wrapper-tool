@@ -75,6 +75,12 @@
             <artifactId>org.eclipse.jgit</artifactId>
             <version>6.5.0.202303070854-r</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.jcabi/jcabi-manifests -->
+<!--        <dependency>-->
+<!--            <groupId>com.jcabi</groupId>-->
+<!--            <artifactId>jcabi-manifests</artifactId>-->
+<!--            <version>1.2.1</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>

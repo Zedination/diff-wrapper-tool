@@ -1,7 +1,9 @@
 package com.zedination.diffwrappertool.controller;
 
+import com.zedination.diffwrappertool.constant.Constant;
 import com.zedination.diffwrappertool.constant.EnumCommon;
 import com.zedination.diffwrappertool.model.GlobalState;
+import com.zedination.diffwrappertool.service.ConfigService;
 import com.zedination.diffwrappertool.service.GitService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -23,6 +25,8 @@ import org.controlsfx.control.ToggleSwitch;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Objects;
 
 public class MainController {
@@ -116,6 +120,7 @@ public class MainController {
         File file = fileChooser.showOpenDialog(node.getScene().getWindow());
         if (Objects.nonNull(file)) {
             beyondComparePathInput.setText(file.getAbsolutePath());
+            ConfigService.getInstance().saveConfig(Constant.BEYOND_COMPARE_PATH, this.beyondComparePathInput.getText());
             GitService.getInstance().changeConfigForBeyondCompare(this.beyondComparePathInput.getText());
         }
     }
@@ -123,6 +128,7 @@ public class MainController {
     @FXML
     protected void handleTextChangedBeyondPath() throws IOException {
         if (!this.beyondComparePathInput.getText().isEmpty()) {
+            ConfigService.getInstance().saveConfig(Constant.BEYOND_COMPARE_PATH, this.beyondComparePathInput.getText());
             GitService.getInstance().changeConfigForBeyondCompare(this.beyondComparePathInput.getText());
         }
     }
@@ -155,7 +161,10 @@ public class MainController {
     }
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
+        beyondComparePathInput.setText(ConfigService.getInstance().readConfig(Constant.BEYOND_COMPARE_PATH));
+        String userPath = System.getProperty("user.home");
+        Files.createDirectories(Paths.get(userPath + "/AppData/Local/Diff Wrapper"));
         System.out.println("Application start!");
     }
 }

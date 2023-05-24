@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a61fb2d1-6a55-4a93-81f9-6df74df044c4" name="Changes" comment="" />
+    <list default="true" id="a61fb2d1-6a55-4a93-81f9-6df74df044c4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/constant/Constant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/service/ConfigService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiffWrapperTool-1.0.exe" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build_install.sh" beforeDir="false" afterPath="$PROJECT_DIR$/build_install.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/diff-wrapper-tool-1.0-SNAPSHOT-shaded.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/MainController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -37,28 +47,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "D:/Source Code/JavaFX Project/diff-wrapper-tool/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.23678161",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Source Code/JavaFX Project/diff-wrapper-tool/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.23678161&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Source Code\JavaFX Project\diff-wrapper-tool\src\main\resources" />
@@ -114,6 +124,7 @@
       <workItem from="1684681691511" duration="12319000" />
       <workItem from="1684757024715" duration="1261000" />
       <workItem from="1684770259197" duration="9934000" />
+      <workItem from="1684944701807" duration="7959000" />
     </task>
     <servers />
   </component>
@@ -142,11 +153,11 @@
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
-      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" line="111">
-        <watch expression="FXCollections.observableList(commitList.stream().filter(this::findAll).toList()" />
-      </inline-watch>
       <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" line="115">
         <watch expression="searchInput.getText().trim().toLowerCase()" />
+      </inline-watch>
+      <inline-watch fileUrl="file://$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/controller/CommitController.java" line="111">
+        <watch expression="FXCollections.observableList(commitList.stream().filter(this::findAll).toList()" />
       </inline-watch>
     </watches-manager>
   </component>
