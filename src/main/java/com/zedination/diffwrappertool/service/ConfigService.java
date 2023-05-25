@@ -1,5 +1,7 @@
 package com.zedination.diffwrappertool.service;
 
+import com.zedination.diffwrappertool.constant.Constant;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,6 +10,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import java.util.prefs.Preferences;
 
 public class ConfigService {
     private ConfigService() {
@@ -20,6 +23,62 @@ public class ConfigService {
     private static class SingletonHelper {
         private static final ConfigService INSTANCE = new ConfigService();
 
+    }
+
+    public void registerWindowsContextMenu() {
+//        // Tạo registry key cho ứng dụng JavaFX
+//        String keyPath = "Software\\Classes\\Directory\\shell\\Diff Wrapper Tool";
+//        Preferences preferences = Preferences.userRoot().node(keyPath);
+//        // Thiết lập giá trị cho key
+//        preferences.put("MUIVerb", "Open with Diff Wrapper Tool");
+//        preferences.put("Icon", "C:\\Users\\Admin\\AppData\\Local\\Diff Wrapper\\diff-wrapper-tool.png");
+//
+//        // Tạo registry key cho command của ứng dụng
+//        Preferences commandPreferences = preferences.node("command");
+//        commandPreferences.put("", "\"C:\\Program Files\\Diff Wrapper Tool\\Diff Wrapper Tool.exe\" \"%V\"");
+        try {
+            if (!"1".equals(readConfig("registry"))) {
+                // Đường dẫn và tên key
+                String keyPath = "HKCU\\Software\\Classes\\Directory\\shell\\Diff Wrapper Tool";
+
+                // Thiết lập các giá trị
+                String muiVerb = "Open with Diff Wrapper Tool";
+                String iconPath = "C:\\Users\\Admin\\AppData\\Local\\Diff Wrapper\\" + Constant.icon;
+
+                // Tạo lệnh reg add context menu folder
+                String[] command1 = {"reg", "add", keyPath, "/ve", "/d", muiVerb, "/f"};
+                String[] command2 = {"reg", "add", keyPath, "/v", "Icon", "/d", iconPath, "/f"};
+//            String[] command3 = {"reg", "add", keyPath + "\\command", "/ve", "/d", executablePath + " \"%V\"", "/f"};
+                String[] command3 = {"cmd.exe", "/c", "reg add \"HKEY_CURRENT_USER\\Software\\Classes\\Directory\\shell\\Diff Wrapper Tool\\command\" /ve /d \"\\\"C:\\Program Files\\Diff Wrapper Tool\\Diff Wrapper Tool.exe\\\" \\\"%V\\\"\" /f"};
+
+                // Tạo lệnh reg add context menu folder (background)
+                String[] command4 = {"reg", "add", "HKCU\\Software\\Classes\\Directory\\Background\\shell\\Diff Wrapper Tool", "/ve", "/d", muiVerb, "/f"};
+                String[] command5 = {"reg", "add", "HKCU\\Software\\Classes\\Directory\\Background\\shell\\Diff Wrapper Tool", "/v", "Icon", "/d", iconPath, "/f"};
+                String[] command6 = {"cmd.exe", "/c", "reg add \"HKEY_CURRENT_USER\\Software\\Classes\\Directory\\Background\\shell\\Diff Wrapper Tool\\command\" /ve /d \"\\\"C:\\Program Files\\Diff Wrapper Tool\\Diff Wrapper Tool.exe\\\" \\\"%V\\\"\" /f"};
+
+                // Thực thi lệnh
+                ProcessBuilder pb1 = new ProcessBuilder(command1);
+                ProcessBuilder pb2 = new ProcessBuilder(command2);
+                ProcessBuilder pb3 = new ProcessBuilder(command3);
+
+                ProcessBuilder pb4 = new ProcessBuilder(command4);
+                ProcessBuilder pb5 = new ProcessBuilder(command5);
+                ProcessBuilder pb6 = new ProcessBuilder(command6);
+
+                pb1.start();
+                pb2.start();
+                pb3.start();
+
+                pb4.start();
+                pb5.start();
+                pb6.start();
+
+                System.out.println("Đã thêm mục vào context menu của Windows Explorer.");
+                saveConfig("registry", "1");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String readConfig(String configName) {

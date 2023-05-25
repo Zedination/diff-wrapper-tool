@@ -9,6 +9,7 @@ module com.zedination.diffwrappertool {
     requires org.jfxtras.styles.jmetro;
     requires org.eclipse.jgit;
     requires static lombok;
+    requires java.prefs;
 
     opens com.zedination.diffwrappertool to javafx.fxml;
     exports com.zedination.diffwrappertool;

@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
@@ -26,7 +27,9 @@ import org.controlsfx.control.ToggleSwitch;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Objects;
 
 public class MainController {
@@ -52,6 +55,16 @@ public class MainController {
 
     @FXML
     private TextField localRepoTextField;
+
+    public void setLocalRepoTextFieldContent(String text) {
+        this.localRepoTextField.setText(text);
+        try {
+            GlobalState.selectedLocalRepository = text;
+            GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+        } catch (Exception e) {
+            alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
+        }
+    }
 
     @FXML
     protected void showListCommitWindows() throws IOException {
@@ -99,15 +112,19 @@ public class MainController {
     }
 
     @FXML
-    protected void selectLocalRepoButton (Event event) throws IOException {
+    protected void selectLocalRepoButton (Event event){
         Node node = (Node) event.getSource();
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setTitle("Chọn folder git bạn muốn diff source");
         File file = directoryChooser.showDialog(node.getScene().getWindow());
         if (Objects.nonNull(file)) {
             this.localRepoTextField.setText(file.getAbsolutePath());
-            GlobalState.selectedLocalRepository = file.getAbsolutePath();
-            GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+            try {
+                GlobalState.selectedLocalRepository = file.getAbsolutePath();
+                GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+            } catch (Exception e) {
+                alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
+            }
         }
     }
 
@@ -134,10 +151,14 @@ public class MainController {
     }
 
     @FXML
-    protected void handleTextChangedGitPath() throws IOException {
+    protected void handleTextChangedGitPath() {
         if (!this.localRepoTextField.getText().isEmpty()) {
-            GlobalState.selectedLocalRepository = this.localRepoTextField.getText();
-            GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+            try {
+                GlobalState.selectedLocalRepository = this.localRepoTextField.getText();
+                GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+            } catch (Exception e) {
+                alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
+            }
         }
     }
 
@@ -162,10 +183,26 @@ public class MainController {
 
     @FXML
     public void initialize() throws IOException {
-        beyondComparePathInput.setText(ConfigService.getInstance().readConfig(Constant.BEYOND_COMPARE_PATH));
         String userPath = System.getProperty("user.home");
         Files.createDirectories(Paths.get(userPath + "/AppData/Local/Diff Wrapper"));
+        File icoIcon = new File(userPath + "/AppData/Local/Diff Wrapper/" + Constant.icon);
+        if (!icoIcon.exists()) {
+            Files.copy(Objects.requireNonNull(getClass().getResourceAsStream("/app.ico")), Paths.get(userPath + "/AppData/Local/Diff Wrapper/"+Constant.icon), StandardCopyOption.REPLACE_EXISTING);
+        }
+        ConfigService.getInstance().registerWindowsContextMenu();
+        beyondComparePathInput.setText(ConfigService.getInstance().readConfig(Constant.BEYOND_COMPARE_PATH));
         ConfigService.getInstance().copyBundleHtmlDiff();
         System.out.println("Application start!");
+    }
+
+    private void alertFail(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi!");
+        alert.setContentText(message);
+        alert.getDialogPane().getStyleClass().add(JMetroStyleClass.BACKGROUND);
+        alert.setHeaderText("Có lỗi xảy ra!");
+        alert.initModality(Modality.APPLICATION_MODAL);
+        new JMetro(Style.DARK).setParent(alert.getDialogPane());
+        alert.show();
     }
 }
