@@ -93,19 +93,25 @@ public class ConfigService {
     }
 
     public void saveConfig(String configName, String configValue) {
-        Properties props = new Properties();
-        // Set the properties to be saved
-        props.setProperty(configName, configValue);
-
-        // Write the file
         try {
+            Properties props = new Properties();
             String userPath = System.getProperty("user.home");
             File configFile = new File(userPath + "/AppData/Local/Diff Wrapper/config.xml");
+
+            // Load existing configuration if the file exists
+            if (configFile.exists()) {
+                FileInputStream in = new FileInputStream(configFile);
+                props.loadFromXML(in);
+                in.close();
+            }
+            // Set the properties to be saved
+            props.setProperty(configName, configValue);
             FileOutputStream out = new FileOutputStream(configFile);
             props.storeToXML(out,"Configuration");
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
         }
+
     }
 
     public void copyBundleHtmlDiff() {
