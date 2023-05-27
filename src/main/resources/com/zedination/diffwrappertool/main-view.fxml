@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.zedination.diffwrappertool.component.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <?import org.controlsfx.control.*?>
+<!--<?import org.kordamp.ikonli.javafx.FontIcon?>-->
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zedination.diffwrappertool.controller.MainController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="415.0" prefWidth="623.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.zedination.diffwrappertool.controller.MainController">
    <children>
       <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
          <children>
@@ -14,6 +16,9 @@
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
+<!--               <graphic>-->
+<!--                  <FontIcon iconLiteral="antf-folder" iconSize="64"/>-->
+<!--               </graphic>-->
             </Label>
          </children>
       </HBox>
@@ -32,6 +37,9 @@
                <HBox.margin>
                   <Insets left="30.0" />
                </HBox.margin>
+<!--               <graphic>-->
+<!--                  <FontIcon iconLiteral="antf-folder" iconSize="64"/>-->
+<!--               </graphic>-->
             </Button>
          </children>
       </HBox>
@@ -59,58 +67,101 @@
                </HBox.margin>
             </Button>
          </children></HBox>
-      <GridPane alignment="CENTER" prefHeight="79.0" prefWidth="624.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="249.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="133.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="241.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
+      <HBox alignment="CENTER" prefHeight="26.0" prefWidth="623.0">
          <children>
-            <Label prefHeight="17.0" prefWidth="88.0" text="LEFT" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
-               <GridPane.margin>
-                  <Insets left="30.0" />
-               </GridPane.margin>
+            <Label alignment="CENTER" prefHeight="6.0" prefWidth="174.0" text="COMPARE GIT SOURCE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Label>
-            <HBox prefHeight="11.0" prefWidth="249.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-               <children>
-                  <TextField fx:id="leftCommitTextField">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="showCommitsLeftButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindows" prefHeight="25.0" prefWidth="28.0" text="...">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin></Button>
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-               <children>
-                  <TextField fx:id="rightCommitTextField">
-                     <HBox.margin>
-                        <Insets left="30.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="showCommitsRightButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindowsRight" prefHeight="25.0" prefWidth="32.0" text="...">
-                     <HBox.margin>
-                        <Insets left="10.0" right="30.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-            </HBox>
-            <Button fx:id="switchButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSwitchButton" prefHeight="25.0" prefWidth="144.0" text="Switch" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button mnemonicParsing="false" onAction="#startDiffByCommit" prefHeight="25.0" prefWidth="139.0" text="Bắt đầu Diff" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <GridPane.margin>
-                  <Insets top="30.0" />
-               </GridPane.margin>
-            </Button>
-            <Label prefHeight="17.0" prefWidth="64.0" text="RIGHT" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
          </children>
-      </GridPane>
+      </HBox>
+      <TabPane prefHeight="151.0" prefWidth="540.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+           <Tab text="Commit Compare">
+              <GridPane alignment="CENTER" prefHeight="118.0" prefWidth="623.0">
+                 <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.0" minWidth="10.0" prefWidth="249.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="203.0" minWidth="10.0" prefWidth="133.0" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="258.0" minWidth="10.0" prefWidth="241.0" />
+                 </columnConstraints>
+                 <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                 </rowConstraints>
+                 <children>
+                    <Label prefHeight="17.0" prefWidth="88.0" text="LEFT" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                       <GridPane.margin>
+                          <Insets left="30.0" />
+                       </GridPane.margin>
+                    </Label>
+                    <HBox prefHeight="57.0" prefWidth="218.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                       <children>
+                          <TextField fx:id="leftCommitTextField">
+                             <HBox.margin>
+                                <Insets left="30.0" />
+                             </HBox.margin>
+                          </TextField>
+                          <Button fx:id="showCommitsLeftButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindows" prefHeight="25.0" prefWidth="28.0" text="...">
+                             <HBox.margin>
+                                <Insets left="10.0" />
+                             </HBox.margin>
+                          </Button>
+                       </children>
+                    </HBox>
+                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                       <children>
+                          <TextField fx:id="rightCommitTextField">
+                             <HBox.margin>
+                                <Insets left="30.0" />
+                             </HBox.margin>
+                          </TextField>
+                          <Button fx:id="showCommitsRightButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#showListCommitWindowsRight" prefHeight="25.0" prefWidth="32.0" text="...">
+                             <HBox.margin>
+                                <Insets left="10.0" right="30.0" />
+                             </HBox.margin>
+                          </Button>
+                       </children>
+                    </HBox>
+                    <Button fx:id="diffCommitButton" mnemonicParsing="false" onAction="#startDiffByCommit" prefHeight="25.0" prefWidth="133.0" text="Bắt đầu diff" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                       <GridPane.margin>
+                          <Insets />
+                       </GridPane.margin>
+                    </Button>
+                    <Label prefHeight="17.0" prefWidth="64.0" text="RIGHT" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                     <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <children>
+                          <Button fx:id="switchButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSwitchButton" prefHeight="25.0" prefWidth="144.0" text="Switch" textAlignment="CENTER" />
+                        </children>
+                     </HBox>
+                 </children>
+              </GridPane>
+           </Tab>
+          <Tab text="Branch Compare">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="103.0" prefWidth="623.0">
+                     <children>
+                        <AutoCompleteTextField fx:id="branch1Input" layoutX="96.0" layoutY="36.0" prefHeight="25.0" prefWidth="346.0" />
+                        <AutoCompleteTextField fx:id="branch2Input" layoutX="96.0" layoutY="74.0" prefHeight="25.0" prefWidth="346.0" />
+                        <Label layoutX="36.0" layoutY="40.0" prefHeight="17.0" prefWidth="45.0" text="LEFT" />
+                        <Label layoutX="36.0" layoutY="78.0" prefHeight="17.0" prefWidth="44.0" text="RIGHT" />
+                        <Button fx:id="switchBranchButton" layoutX="466.0" layoutY="36.0" mnemonicParsing="false" onAction="#onSwitchBranchButton" prefHeight="25.0" prefWidth="126.0" text="Switch" >
+
+                        </Button>
+                        <Button fx:id="diffBranchButton" layoutX="467.0" layoutY="74.0" mnemonicParsing="false" onAction="#onClickDiffBranch" prefHeight="25.0" prefWidth="126.0" text="Bắt đầu diff" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </TabPane>
+      <ProgressBar fx:id="diffProgressBar" prefHeight="18.0" prefWidth="560.0" progress="-Infinity" visible="false">
+         <VBox.margin>
+            <Insets left="30.0" right="30.0" top="15.0" />
+         </VBox.margin>
+      </ProgressBar>
    </children>
 </VBox>

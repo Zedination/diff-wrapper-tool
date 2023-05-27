@@ -2,6 +2,8 @@ package com.zedination.diffwrappertool.service;
 
 import com.zedination.diffwrappertool.model.GlobalState;
 import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.ListBranchCommand;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
@@ -12,8 +14,10 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class GitService {
     private GitService() {
@@ -95,5 +99,14 @@ public class GitService {
         config.setString("diff", null, "tool", "bc");
         config.save();
 
+    }
+
+    public List<String> getListBranch() throws GitAPIException, IOException {
+        Repository repository = Git.open(new File(GlobalState.selectedLocalRepository)).getRepository();
+        // Lấy danh sách các nhánh
+        List<String> allBranches = new ArrayList<>();
+        allBranches.addAll(Git.wrap(repository).branchList().call().stream().map(x -> x.getName().replace("refs/heads/", "")).toList());
+        allBranches.addAll(Git.wrap(repository).branchList().setListMode(ListBranchCommand.ListMode.REMOTE).call().stream().map(Ref::getName).toList());
+        return allBranches;
     }
 }

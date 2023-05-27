@@ -1,10 +1,13 @@
 package com.zedination.diffwrappertool.controller;
 
+import com.zedination.diffwrappertool.component.AutoCompleteTextField;
 import com.zedination.diffwrappertool.constant.Constant;
 import com.zedination.diffwrappertool.constant.EnumCommon;
 import com.zedination.diffwrappertool.model.GlobalState;
 import com.zedination.diffwrappertool.service.ConfigService;
 import com.zedination.diffwrappertool.service.GitService;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +16,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
@@ -23,13 +27,14 @@ import jfxtras.styles.jmetro.JMetroStyleClass;
 import jfxtras.styles.jmetro.Style;
 import lombok.Getter;
 import org.controlsfx.control.ToggleSwitch;
+import org.controlsfx.control.textfield.TextFields;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.Objects;
 
 public class MainController {
@@ -56,11 +61,31 @@ public class MainController {
     @FXML
     private TextField localRepoTextField;
 
+    @FXML
+    private AutoCompleteTextField branch1Input;
+
+    @FXML
+    private AutoCompleteTextField branch2Input;
+
+    @FXML
+    private Button diffCommitButton;
+
+    @FXML
+    private Button diffBranchButton;
+
+    @FXML
+    private ProgressBar diffProgressBar;
+
     public void setLocalRepoTextFieldContent(String text) {
         this.localRepoTextField.setText(text);
         try {
             GlobalState.selectedLocalRepository = text;
             GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+            List<String> branchList = GitService.getInstance().getListBranch();
+            branch1Input.getEntries().clear();
+            branch2Input.getEntries().clear();
+            branch2Input.getEntries().addAll(branchList);
+            branch1Input.getEntries().addAll(branchList);
         } catch (Exception e) {
             alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
         }
@@ -112,6 +137,15 @@ public class MainController {
     }
 
     @FXML
+    protected void onSwitchBranchButton() {
+        String temp = this.branch1Input.getText();
+        this.branch1Input.setText(this.branch2Input.getText());
+        this.branch2Input.setText(temp);
+        this.branch1Input.getEntriesPopup().hide();
+        this.branch2Input.getEntriesPopup().hide();
+    }
+
+    @FXML
     protected void selectLocalRepoButton (Event event){
         Node node = (Node) event.getSource();
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -122,6 +156,11 @@ public class MainController {
             try {
                 GlobalState.selectedLocalRepository = file.getAbsolutePath();
                 GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+                List<String> branchList = GitService.getInstance().getListBranch();
+                branch1Input.getEntries().clear();
+                branch2Input.getEntries().clear();
+                branch2Input.getEntries().addAll(branchList);
+                branch1Input.getEntries().addAll(branchList);
             } catch (Exception e) {
                 alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
             }
@@ -156,6 +195,11 @@ public class MainController {
             try {
                 GlobalState.selectedLocalRepository = this.localRepoTextField.getText();
                 GitService.getInstance().initGitState(GlobalState.selectedLocalRepository);
+                List<String> branchList = GitService.getInstance().getListBranch();
+                branch1Input.getEntries().clear();
+                branch2Input.getEntries().clear();
+                branch2Input.getEntries().addAll(branchList);
+                branch1Input.getEntries().addAll(branchList);
             } catch (Exception e) {
                 alertFail("Folder bạn chọn không phải là một Git repository, vui lòng chọn lại!");
             }
@@ -163,12 +207,52 @@ public class MainController {
     }
 
     @FXML
-    protected void startDiffByCommit() throws IOException {
-        if (!GlobalState.isBeyondCompare) {
-            GitService.getInstance().diffHtml(leftCommitTextField.getText(), rightCommitTextField.getText());
-        } else {
-            GitService.getInstance().diffBeyondCompare(leftCommitTextField.getText(), rightCommitTextField.getText());
-        }
+    protected void startDiffByCommit() {
+        Service<Void> diffService = new Service<Void>() {
+
+            protected void succeeded() {
+                super.succeeded();
+                diffCommitButton.setDisable(false);
+                diffProgressBar.progressProperty().unbind();
+                diffProgressBar.setVisible(false);
+            }
+
+            @Override
+            public void start() {
+                super.start();
+                diffCommitButton.setDisable(true);
+                diffProgressBar.setVisible(true);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                diffCommitButton.setDisable(false);
+                diffProgressBar.progressProperty().unbind();
+                diffProgressBar.setVisible(false);
+            }
+
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() {
+                        try {
+                            if (!GlobalState.isBeyondCompare) {
+                                GitService.getInstance().diffHtml(leftCommitTextField.getText(), rightCommitTextField.getText());
+                            } else {
+                                GitService.getInstance().diffBeyondCompare(leftCommitTextField.getText(), rightCommitTextField.getText());
+                            }
+                        } catch (Exception e) {
+                            alertFail(e.getMessage());
+                        }
+                        return null;
+                    }
+                };
+            }
+        };
+        this.diffProgressBar.progressProperty().bind(diffService.progressProperty());
+        diffService.start();
     }
 
     @FXML
@@ -179,6 +263,55 @@ public class MainController {
         } else {
             GlobalState.isBeyondCompare = false;
         }
+    }
+
+    @FXML
+    protected void onClickDiffBranch() {
+        Service<Void> diffService = new Service<Void>() {
+
+            protected void succeeded() {
+                super.succeeded();
+                diffBranchButton.setDisable(false);
+                diffProgressBar.progressProperty().unbind();
+                diffProgressBar.setVisible(false);
+            }
+
+            @Override
+            public void start() {
+                super.start();
+                diffCommitButton.setDisable(true);
+                diffProgressBar.setVisible(true);
+            }
+
+            @Override
+            protected void failed() {
+                super.failed();
+                diffBranchButton.setDisable(false);
+                diffProgressBar.progressProperty().unbind();
+                diffProgressBar.setVisible(false);
+            }
+
+            @Override
+            protected Task<Void> createTask() {
+                return new Task<Void>() {
+                    @Override
+                    protected Void call() {
+                        try {
+                            if (!GlobalState.isBeyondCompare) {
+                                GitService.getInstance().diffHtml(branch1Input.getText(), branch2Input.getText());
+                            } else {
+                                GitService.getInstance().diffBeyondCompare(branch1Input.getText(), branch2Input.getText());
+                            }
+                        } catch (Exception e) {
+                            alertFail(e.getMessage());
+                        }
+                        return null;
+                    }
+                };
+            }
+        };
+        this.diffProgressBar.progressProperty().bind(diffService.progressProperty());
+        diffService.start();
     }
 
     @FXML

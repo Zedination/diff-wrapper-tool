@@ -10,7 +10,6 @@ import java.nio.file.StandardCopyOption;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.util.prefs.Preferences;
 
 public class ConfigService {
     private ConfigService() {

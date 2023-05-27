@@ -21,6 +21,7 @@ public class HelloApplication extends Application {
         Parent root = fxmlLoader.load();
         root.getStyleClass().add(JMetroStyleClass.BACKGROUND);
         JMetro jMetro = new JMetro(Style.DARK);
+//        JMetro jMetro = new JMetro(Style.LIGHT);
         Scene scene = new Scene(root);
         jMetro.setScene(scene);
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/app.png"))));
