@@ -2,9 +2,95 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Diff Wrapper Tool</title>
 </head>
-<body>
-    <h1>Hello</h1>
+<body class="container">
+    <h1 id="hướng-dẫn-cài-đặt-và-sử-dụng-diff-wrapper-tool">Hướng dẫn cài
+        đặt và sử dụng Diff Wrapper Tool</h1>
+        <p>Diff Wrapper Tool là một Tool đơn giản, wrapper của diff2html và
+        Beyond Compare dùng để compare git src và export kết quả compare tiện
+        lợi hơn<br> Viết tool vì nhìn ae export diff src khổ quá 😄</p>
+        <ul>
+        <li>Tác giả: Zedination</li>
+        <li>Email: <a href="mailto:leanhduc9999@gmail.com"><a
+        href="mailto:leanhduc9999@gmail.com">leanhduc9999@gmail.com</a></a></li>
+        <li>Discord cá nhân: <a
+        href="https://discordapp.com/users/958007722471719003">https://discordapp.com/users/958007722471719003</a></li>
+        </ul>
+        <h2 id="mục-lục">Mục lục</h2>
+        <ul>
+        <li><a href="#hướng-dẫn-cài-đặt-và-sử-dụng-diff-wrapper-tool">Hướng dẫn
+        cài đặt và sử dụng Diff Wrapper Tool</a>
+        <ul>
+        <li><a href="#mục-lục">Mục lục</a></li>
+        <li><a href="#tính-năng">Tính năng</a></li>
+        <li><a href="#yêu-cầu-hệ-thống">Yêu cầu hệ thống</a></li>
+        <li><a href="#cài-đặt">Cài đặt</a></li>
+        <li><a href="#cách-sử-dụng">Cách sử dụng</a></li>
+        <li><a href="#license">License</a></li>
+        </ul></li>
+        </ul>
+        <h2 id="tính-năng">Tính năng</h2>
+        <ul>
+        <li>Diff src bằng Diff2html</li>
+        <li>Diff src bằng Beyond Compare (nên sử dụng version 4)</li>
+        <li>Branch compare &amp; commit compare</li>
+        <li>Dùng được bằng Windows Exprorer Context Menu</li>
+        </ul>
+        <h2 id="yêu-cầu-hệ-thống">Yêu cầu hệ thống</h2>
+        <ul>
+        <li>NodeJS version &gt;= 14</li>
+        <li>Windows 10 trở lên</li>
+        </ul>
+        <h2 id="cài-đặt">Cài đặt</h2>
+        <ol type="1">
+        <li>Download bản cài <a
+        href="https://zedination.dev/diff-wrapper-tool/Diff%20Wrapper%20Tool-1.0.exe">tại
+        đây!</a></li>
+        <li>Cài đặt bản cài, sau khi cài đặt thành công, màn hình desktop sẽ
+        xuất hiện app có tên Diff Wrapper Tool, lần mở đầu tiên sẽ tiến hành
+        đăng ký windows context menu</li>
+        </ol>
+        <h2 id="cách-sử-dụng">Cách sử dụng</h2>
+        <p>Tool sẽ có giao diện như sau <br> <br> <img src="static/1.png"
+        alt="image" /></p>
+        <ol type="1">
+        <li>Chọn folder git cần diff src, có thể chọn bằng cách sử dụng Explorer
+        Context Menu <br> <img src="static/4.png" alt="image" /></li>
+        <li>Chọn file Bcomp.exe của Beyond compare được cài trên máy, sử dụng
+        toggle để bật tắt sử dụng Beyond Compare</li>
+        <li>Chọn commit muốn compare tại đây, có thể diff trực tiếp tại giao
+        diện chọn commit. Phải nhập tối thiểu một trong 2 input commit, mặc định
+        sẽ là HEAD<br> <img src="static/3.png" alt="image" /></li>
+        <li>Nhập branch cần compare tại đây. Phải nhập tối thiểu 1 input branch,
+        mặc định sẽ là nhánh đang chọn <br> <img src="static/2.png"
+        alt="image" /></li>
+        </ol>
+        <h2 id="license">License</h2>
+        <p>This project is licensed under the MIT License</p>
+        <blockquote>
+        Copyright (c) 2023 Zedination
+        
+        <p>Permission is hereby granted, free of charge, to any person obtaining
+        a copy of this software and associated documentation files (the
+        "Software"), to deal in the Software without restriction, including
+        without limitation the rights to use, copy, modify, merge, publish,
+        distribute, sublicense, and/or sell copies of the Software, and to
+        permit persons to whom the Software is furnished to do so, subject to
+        the following conditions:</p>
+        <p>The above copyright notice and this permission notice shall be
+        included in all copies or substantial portions of the Software.</p>
+        <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+        </blockquote>
+        
 </body>
 </html>

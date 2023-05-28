@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a61fb2d1-6a55-4a93-81f9-6df74df044c4" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/service/ConfigService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/zedination/diffwrappertool/service/ConfigService.java" afterDir="false" />
-    </list>
+    <list default="true" id="a61fb2d1-6a55-4a93-81f9-6df74df044c4" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -123,6 +120,7 @@
       <workItem from="1685027069322" duration="9848000" />
       <workItem from="1685130104638" duration="23772000" />
       <workItem from="1685208672179" duration="931000" />
+      <workItem from="1685210704972" duration="60000" />
     </task>
     <servers />
   </component>
